@@ -46,7 +46,7 @@
 }
 
 .card section[aria-label="image"] > img {
-  @apply rounded-md max-h-[75vh] aspect-9/12 object-cover object-center;
+  @apply rounded-md max-h-[70vh] aspect-9/12 object-cover object-center;
 }
 
 /* text */

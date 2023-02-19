@@ -24,7 +24,7 @@ export default function Card() {
         <section aria-label='image' className='group'>
           <img onLoad={() => setIsLoading(false)} src={saying.pic} alt='beautiful image' />
           {!isLoading && (
-            <section aria-label='text' className='md:translate-y-20 md:group-hover:translate-y-0 duration-500'>
+            <section aria-label='text' className='md:-translate-y-20 md:group-hover:-translate-y-[100%] duration-500'>
               <span className='after:w-32 md:after:w-5 after:origin-left md:group-hover:after:scale-x-[6] after:duration-300 after:delay-200'>
                 <p>
                   {saying.month} {saying.day}

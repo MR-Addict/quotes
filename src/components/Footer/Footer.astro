@@ -1,0 +1,15 @@
+---
+---
+
+<footer class='flex flex-row gap-2 text-gray-900'>
+  <p id='copyright'></p>
+  <p>•</p>
+  <a href='https://github.com/MR-Addict/sayings' class='underline'>Github Source</a>
+</footer>
+
+<script>
+  const footer = document.getElementById("copyright");
+  if (footer) {
+    footer.innerHTML = `&copy; Copyright ${new Date().getFullYear()}`;
+  }
+</script>

@@ -5,7 +5,6 @@
 /* image */
 .card section[aria-label="image"] {
   box-shadow: 0 0 25px #00bccaa9;
-  background: radial-gradient(#aee2ff, #93c6e7);
   @apply w-full rounded-md max-h-[80vh] max-w-3xl aspect-9/12 md:aspect-video relative md:overflow-y-hidden;
 }
 
@@ -25,7 +24,7 @@
 
 .card section[aria-label="text"] > span:first-of-type::after {
   content: "";
-  @apply h-1 w-24 bg-green-600/[0.8];
+  @apply h-1 w-36 bg-green-600/[0.8];
 }
 
 .card section[aria-label="text"] > span:last-of-type {

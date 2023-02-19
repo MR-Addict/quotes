@@ -17,9 +17,9 @@ export default function Card() {
 
   return (
     <main className={style.card}>
-      {saying && (
-        <section aria-label='image' className='group'>
-          <img src={saying.pic} alt='beautiful caption' />
+      <section aria-label='image' className='group'>
+        {saying && <img src={saying.pic} alt='beautiful image' />}
+        {saying && (
           <section aria-label='text' className='md:translate-y-20 md:group-hover:translate-y-0 duration-500'>
             <span>
               <p>
@@ -31,8 +31,8 @@ export default function Card() {
               <p>{saying.en}</p>
             </span>
           </section>
-        </section>
-      )}
+        )}
+      </section>
     </main>
   );
 }

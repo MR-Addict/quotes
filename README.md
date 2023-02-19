@@ -1,10 +1,10 @@
-# Sayings
+# Quotes
 
 ## 1. Links
 
 Links:
 
-- [https://sayings.mraddict.vercel.app](https://sayings.mraddict.vercel.app)
+- [https://quotes.mraddict.vercel.app](https://quotes.mraddict.vercel.app)
 
 ## 2 Deploy
 

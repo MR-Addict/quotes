@@ -18,11 +18,12 @@ export default function Card() {
 
   return (
     <main className={style.card}>
-      <section aria-label='image' className='group'>
-        {saying && <img src={saying.pic} alt='beautiful image' />}
-        {saying && (
+      {!saying && <div className={style.loading}></div>}
+      {saying && (
+        <section aria-label='image' className='group'>
+          <img src={saying.pic} alt='beautiful image' />
           <section aria-label='text' className='md:translate-y-20 md:group-hover:translate-y-0 duration-500'>
-            <span>
+            <span className='after:w-32 md:after:w-5 after:origin-left md:group-hover:after:scale-x-[6] after:duration-300 after:delay-200'>
               <p>
                 {saying.month} {saying.day}
               </p>
@@ -32,8 +33,8 @@ export default function Card() {
               <p>{saying.en}</p>
             </span>
           </section>
-        )}
-      </section>
+        </section>
+      )}
     </main>
   );
 }

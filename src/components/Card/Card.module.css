@@ -2,6 +2,41 @@
   @apply flex flex-col items-center justify-center cursor-pointer;
 }
 
+/* loading */
+.loading {
+  position: relative;
+  box-sizing: border-box;
+  border: 0.3rem solid #fff;
+  width: 5rem;
+  height: 5rem;
+  animation: spin 3s infinite linear;
+}
+
+.loading::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  border: 0.3rem solid #fff;
+  width: 4rem;
+  height: 4rem;
+  animation: pulse 1.5s infinite ease;
+}
+
+@keyframes pulse {
+  50% {
+    border-width: 2rem;
+  }
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /* image */
 .card section[aria-label="image"] {
   box-shadow: 0 0 25px #00bccaa9;
@@ -9,7 +44,7 @@
 }
 
 .card section[aria-label="image"] > img {
-  @apply rounded-md max-h-[70vh] aspect-9/12 flex-1 object-cover object-center;
+  @apply rounded-md max-h-[70vh] aspect-9/12 object-cover object-center;
 }
 
 /* text */
@@ -24,7 +59,7 @@
 
 .card section[aria-label="text"] > span:first-of-type::after {
   content: "";
-  @apply h-1 w-36 bg-green-600/[0.8];
+  @apply h-1 bg-green-600;
 }
 
 .card section[aria-label="text"] > span:last-of-type {

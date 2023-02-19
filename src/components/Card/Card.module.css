@@ -4,8 +4,10 @@
 
 /* loading */
 .loading {
-  position: relative;
-  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50%;
   border: 0.3rem solid #fff;
   width: 5rem;
   height: 5rem;

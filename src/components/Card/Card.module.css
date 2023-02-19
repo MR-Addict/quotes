@@ -1,15 +1,15 @@
 .card {
-  @apply w-full flex flex-col items-center justify-center cursor-pointer;
+  @apply flex flex-col items-center justify-center cursor-pointer;
 }
 
 /* image */
 .card section[aria-label="image"] {
   box-shadow: 0 0 25px #00bccaa9;
-  @apply w-full rounded-md max-h-[80vh] max-w-3xl aspect-9/12 md:aspect-video relative md:overflow-y-hidden;
+  @apply rounded-md relative md:overflow-y-hidden;
 }
 
 .card section[aria-label="image"] > img {
-  @apply rounded-md w-full h-full object-cover;
+  @apply rounded-md max-h-[70vh] aspect-9/12 flex-1 object-cover object-center;
 }
 
 /* text */
@@ -19,7 +19,7 @@
 }
 
 .card section[aria-label="text"] > span:first-of-type {
-  @apply text-3xl font-bold flex flex-col gap-1 text-white w-fit;
+  @apply text-3xl font-bold flex flex-col gap-1 text-white;
 }
 
 .card section[aria-label="text"] > span:first-of-type::after {

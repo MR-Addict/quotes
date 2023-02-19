@@ -8,9 +8,10 @@ export default function Card() {
 
   useEffect(() => {
     async function fetchSaying() {
-      const res = await fetch("https://api.vvhan.com/api/en");
-      const result = await res.json();
-      setSaying(result.data);
+      await fetch("https://api.vvhan.com/api/en")
+        .then((res) => res.json())
+        .then((result) => result.success === true && setSaying(result.data))
+        .catch((error) => console.error(error));
     }
     fetchSaying();
   }, []);

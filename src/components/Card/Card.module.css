@@ -1,0 +1,33 @@
+.card {
+  @apply w-full flex flex-col items-center justify-center cursor-pointer;
+}
+
+/* image */
+.card section[aria-label="image"] {
+  box-shadow: 0 0 10px #b0b0b0;
+  background: radial-gradient(#cbcbcb, #e7e7e7);
+  @apply w-full rounded-md max-h-[80vh] max-w-3xl aspect-9/12 md:aspect-video relative md:overflow-y-hidden;
+}
+
+.card section[aria-label="image"] > img {
+  @apply rounded-md w-full h-full object-cover;
+}
+
+/* text */
+.card section[aria-label="text"] {
+  background-color: rgb(0, 0, 0, 0.5);
+  @apply flex flex-col gap-5 absolute w-full bottom-0 p-4 md:p-5 text-white rounded-b-md;
+}
+
+.card section[aria-label="text"] > span:first-of-type {
+  @apply text-3xl font-bold flex flex-col gap-1 text-white w-fit;
+}
+
+.card section[aria-label="text"] > span:first-of-type::after {
+  content: "";
+  @apply h-1 w-24 bg-green-600/[0.8];
+}
+
+.card section[aria-label="text"] > span:last-of-type {
+  @apply md:text-lg;
+}

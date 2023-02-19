@@ -4,8 +4,8 @@
 
 /* image */
 .card section[aria-label="image"] {
-  box-shadow: 0 0 10px #b0b0b0;
-  background: radial-gradient(#cbcbcb, #e7e7e7);
+  box-shadow: 0 0 25px #00bccaa9;
+  background: radial-gradient(#aee2ff, #93c6e7);
   @apply w-full rounded-md max-h-[80vh] max-w-3xl aspect-9/12 md:aspect-video relative md:overflow-y-hidden;
 }
 

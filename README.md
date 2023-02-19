@@ -1,8 +1,6 @@
 # Sayings
 
-## 1. Preview
-
-Project based on [astro](https://astro.build) framework.
+## 1. Links
 
 Links:
 
@@ -10,10 +8,14 @@ Links:
 
 ## 2 Deploy
 
+Build project:
+
 ```bash
 npm run build
 ```
 
+Preview project:
+
 ```bash
-npm run start
+npm run preview
 ```

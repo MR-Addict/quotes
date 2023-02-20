@@ -142,6 +142,6 @@
   }
 
   section[aria-label="text"] > div:last-of-type {
-    @apply text-lg flex flex-col gap-1;
+    @apply flex flex-col md:gap-1;
   }
 </style>

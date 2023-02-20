@@ -1,49 +1,107 @@
 <script lang="ts">
   interface QuoteType {
-    month: string;
-    day: string;
+    date: string;
     zh: string;
     en: string;
-    pic: string;
+    img: string;
   }
 
+  let disabled = true;
   let isLoading = true;
-  let quote: QuoteType | null;
-  fetch("https://api.vvhan.com/api/en")
-    .then((res) => res.json())
-    .then((result) => {
-      if (result.success) quote = result.data;
-      else quote = null;
-    })
-    .catch((error) => console.error(error));
+  let currentDate = new Date();
+  let promise = fetchQuote();
+
+  $: {
+    const newDate = new Date();
+    newDate.setDate(currentDate.getDate() + 1);
+    disabled = newDate > new Date();
+  }
+
+  async function fetchQuote() {
+    isLoading = true;
+    currentDate.setHours(currentDate.getHours() - 1);
+    const date = currentDate.toISOString();
+
+    const url = "https://chromeawslambdaapi.mraddict.one/quote" + `?${new URLSearchParams({ date })}`;
+    const res = await fetch(url);
+
+    if (!res.ok) return null;
+    const result = await res.json();
+
+    if (!result.status) return null;
+    return result.data as QuoteType;
+  }
+
+  function handleClick(next: boolean) {
+    const newDate = new Date();
+    if (next) newDate.setDate(currentDate.getDate() + 1);
+    else newDate.setDate(currentDate.getDate() - 1);
+
+    if (newDate > new Date()) return;
+    currentDate = newDate;
+    promise = fetchQuote();
+  }
 </script>
 
 <main class="card">
   {#if isLoading}
     <section class="loading" />
   {/if}
-  {#if quote}
-    <section aria-label="image">
-      <img on:load={() => (isLoading = false)} src={quote.pic} alt="beautiful image" />
-      {#if !isLoading}
-        <section aria-label="text">
-          <div>
-            {`${quote.month} ${quote.day}`}
-          </div>
-          <div>
-            <sapn>{quote.zh}</sapn>
-            <sapn>{quote.en}</sapn>
-          </div>
-        </section>
-      {/if}
-    </section>
-  {/if}
+  {#await promise then quote}
+    {#if quote}
+      <section aria-label="image">
+        <button on:click={() => handleClick(false)} class="left">{"<"}</button>
+        <button {disabled} on:click={() => handleClick(true)} class="right">{">"}</button>
+
+        <img on:load={() => (isLoading = false)} src={quote.img} alt="beautiful image" />
+        {#if !isLoading}
+          <section aria-label="text">
+            <div>
+              {`${new Date(quote.date).toDateString().split(" ").slice(1, 3).join(" ")}`}
+            </div>
+            <div>
+              <sapn>{quote.zh}</sapn>
+              <sapn>{quote.en}</sapn>
+            </div>
+          </section>
+        {/if}
+      </section>
+    {/if}
+  {:catch}
+    <h1>Error occurred!</h1>
+  {/await}
 </main>
 
 <style lang="css">
   /* main */
   main {
-    @apply flex flex-col items-center justify-center cursor-pointer relative;
+    @apply flex flex-col items-center justify-center relative;
+  }
+
+  /* arrow */
+  .left {
+    @apply left-0;
+  }
+
+  .right {
+    @apply right-0;
+  }
+
+  button {
+    @apply md:opacity-0 duration-300 text-3xl w-fit p-2 absolute top-1/2 -translate-y-1/2 text-white bg-black/[0.5];
+  }
+
+  button:disabled {
+    @apply hidden;
+  }
+
+  section[aria-label="image"]:hover button {
+    @apply md:opacity-100;
+  }
+
+  /* error */
+  main > h1 {
+    @apply text-2xl font-semibold text-white bg-black/[0.5] p-5 rounded-md;
   }
 
   /* loading */
@@ -70,7 +128,7 @@
   /* text */
   section[aria-label="text"] {
     background-color: rgb(0, 0, 0, 0.5);
-    @apply -translate-y-[100%] md:-translate-y-20 duration-500;
+    @apply -translate-y-[100%];
     @apply flex flex-col gap-5 absolute w-full p-4 md:p-5 text-white rounded-b-md;
   }
 
@@ -80,19 +138,10 @@
 
   section[aria-label="text"] > div:first-of-type::after {
     content: "";
-    @apply h-1 w-32 md:w-5 origin-left duration-300 delay-200 bg-green-600;
+    @apply h-1 w-32 origin-left duration-300 delay-200 bg-green-600;
   }
 
   section[aria-label="text"] > div:last-of-type {
-    @apply md:text-lg;
-  }
-
-  /* hover effect */
-  section[aria-label="image"]:hover section[aria-label="text"] {
-    @apply md:-translate-y-[100%];
-  }
-
-  section[aria-label="image"]:hover section[aria-label="text"] > div:first-of-type::after {
-    @apply md:scale-x-[6];
+    @apply text-lg flex flex-col gap-1;
   }
 </style>

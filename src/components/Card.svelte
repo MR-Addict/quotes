@@ -13,7 +13,7 @@
 
   $: {
     const newDate = new Date();
-    newDate.setDate(currentDate.getDate() + 1);
+    newDate.setTime(currentDate.getTime() + 24 * 60 * 60 * 1000);
     disabled = newDate > new Date();
   }
 
@@ -25,17 +25,26 @@
     const url = "https://chromeawslambdaapi.mraddict.one/quote" + `?${new URLSearchParams({ date })}`;
     const res = await fetch(url);
 
-    if (!res.ok) return null;
+    if (!res.ok) {
+      isLoading = false;
+      throw new Error("Cannot fetch quote!");
+    }
     const result = await res.json();
 
-    if (!result.status) return null;
+    if (!result.status) {
+      isLoading = false;
+      throw new Error(result.message);
+    }
     return result.data as QuoteType;
   }
 
   function handleClick(next: boolean) {
     const newDate = new Date();
-    if (next) newDate.setDate(currentDate.getDate() + 1);
-    else newDate.setDate(currentDate.getDate() - 1);
+
+    if (next) newDate.setTime(currentDate.getTime() + 24 * 60 * 60 * 1000);
+    else newDate.setTime(currentDate.getTime() - 24 * 60 * 60 * 1000);
+
+    console.log(newDate);
 
     if (newDate > new Date()) return;
     currentDate = newDate;
@@ -92,7 +101,7 @@
   }
 
   button:disabled {
-    @apply hidden;
+    @apply cursor-not-allowed;
   }
 
   section[aria-label="image"]:hover button {
@@ -106,7 +115,7 @@
 
   /* loading */
   .loading {
-    translate: -50%;
+    translate: -50% -50%;
     @apply animate-custom-spin border-4 border-white w-20 h-20 absolute top-1/2 left-1/2;
   }
 
@@ -122,7 +131,7 @@
   }
 
   section[aria-label="image"] > img {
-    @apply rounded-md sm:max-h-[75vh] aspect-9/12 object-cover object-center;
+    @apply rounded-md max-h-[75vh] aspect-9/12 object-cover object-center;
   }
 
   /* text */

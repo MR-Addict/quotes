@@ -1,4 +1,4 @@
-export interface SayingType {
+export interface QuoteType {
   month: string;
   day: string;
   zh: string;

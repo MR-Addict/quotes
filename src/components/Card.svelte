@@ -131,7 +131,7 @@
   }
 
   section[aria-label="image"] > img {
-    @apply rounded-md max-h-[75vh] aspect-9/12 object-cover object-center;
+    @apply rounded-md max-h-[80vh] sm:max-h-[75vh] aspect-9/13 object-cover object-center;
   }
 
   /* text */

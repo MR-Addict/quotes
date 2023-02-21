@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       aspectRatio: {
-        "9/12": "9 / 12",
+        "9/13": "9 / 13",
       },
       animation: {
         "custom-spin": "spin 3s linear infinite",

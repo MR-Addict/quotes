@@ -23,19 +23,22 @@
     const date = currentDate.toLocaleDateString("zh-cn", { timeZone: "Asia/Shanghai" }).replaceAll("/", "-");
 
     const url = "https://chromeawslambdaapi.mraddict.one/quote" + `?${new URLSearchParams({ date })}`;
-    const res = await fetch(url);
-
-    if (res.status !== 200) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) {
+        isLoading = false;
+        throw new Error("Failed fetch quote!");
+      }
+      const result = await res.json();
+      if (!result.status) {
+        isLoading = false;
+        throw new Error(result.message);
+      }
+      return result.data as QuoteType;
+    } catch (error) {
       isLoading = false;
-      throw new Error("Cannot fetch quote!");
+      throw new Error("Failed fetch quote!");
     }
-    const result = await res.json();
-
-    if (!result.status) {
-      isLoading = false;
-      throw new Error(result.message);
-    }
-    return result.data as QuoteType;
   }
 
   function handleClick(next: boolean) {

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { formatDate } from "@/lib/util";
   interface QuoteType {
     date: string;
     zh: string;
@@ -21,9 +20,9 @@
   async function fetchQuote() {
     isLoading = true;
     currentDate.setHours(currentDate.getHours() - 1);
-    const date = formatDate(currentDate).split(" ")[0];
+    const date = currentDate.toLocaleDateString("zh-cn", { timeZone: "Asia/Shanghai" }).replaceAll("/", "-");
 
-    const url = "/quote" + `?${new URLSearchParams({ date })}`;
+    const url = "https://chromeawslambdaapi.mraddict.one/quote" + `?${new URLSearchParams({ date })}`;
     const res = await fetch(url);
 
     if (res.status !== 200) {
@@ -60,7 +59,7 @@
       <section aria-label="image">
         <button on:click={() => handleClick(false)} class="left">{"<"}</button>
         <button disabled={isButtonDisabled} on:click={() => handleClick(true)} class="right">{">"}</button>
-        <img on:load={() => (isLoading = false)} src={quote.img} alt="beautiful image" />
+        <img on:load={() => (isLoading = false)} src={quote.img} alt="beautiful quote" />
         {#if !isLoading}
           <section aria-label="text">
             <div>
@@ -75,7 +74,6 @@
       </section>
     {/if}
   {:catch error}
-    {console.error(error)}
     <h1>Error occurred!</h1>
   {/await}
 </main>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { formatDate } from "@/lib/util";
   interface QuoteType {
     date: string;
     zh: string;
@@ -20,9 +21,9 @@
   async function fetchQuote() {
     isLoading = true;
     currentDate.setHours(currentDate.getHours() - 1);
-    const date = currentDate.toLocaleString("zh-cn", { timeZone: "Asia/Shanghai" }).split(" ")[0].replaceAll("/", "-");
+    const date = formatDate(currentDate).split(" ")[0];
 
-    const url = "https://chromeawslambdaapi.mraddict.one/quote" + `?${new URLSearchParams({ date })}`;
+    const url = "/quote" + `?${new URLSearchParams({ date })}`;
     const res = await fetch(url);
 
     if (res.status !== 200) {
@@ -73,7 +74,8 @@
         {/if}
       </section>
     {/if}
-  {:catch}
+  {:catch error}
+    {console.error(error)}
     <h1>Error occurred!</h1>
   {/await}
 </main>

@@ -22,7 +22,7 @@
     currentDate.setHours(currentDate.getHours() - 1);
     const date = currentDate.toLocaleDateString("zh-cn", { timeZone: "Asia/Shanghai" }).replaceAll("/", "-");
 
-    const url = "https://chromeawslambdaapi.mraddict.one/quote" + `?${new URLSearchParams({ date })}`;
+    const url = "https://api.mraddict.one/quote" + `?${new URLSearchParams({ date })}`;
     try {
       const res = await fetch(url);
       if (!res.ok) {

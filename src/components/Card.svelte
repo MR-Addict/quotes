@@ -6,26 +6,26 @@
     img: string;
   }
 
-  let disabled = true;
   let isLoading = true;
+  let isButtonDisabled = true;
   let currentDate = new Date();
   let promise = fetchQuote();
 
   $: {
     const newDate = new Date();
     newDate.setTime(currentDate.getTime() + 24 * 60 * 60 * 1000);
-    disabled = newDate > new Date();
+    isButtonDisabled = newDate > new Date();
   }
 
   async function fetchQuote() {
     isLoading = true;
     currentDate.setHours(currentDate.getHours() - 1);
-    const date = currentDate.toISOString();
+    const date = currentDate.toLocaleString("zh-cn", { timeZone: "Asia/Shanghai" }).split(" ")[0].replaceAll("/", "-");
 
     const url = "https://chromeawslambdaapi.mraddict.one/quote" + `?${new URLSearchParams({ date })}`;
     const res = await fetch(url);
 
-    if (!res.ok) {
+    if (res.status !== 200) {
       isLoading = false;
       throw new Error("Cannot fetch quote!");
     }
@@ -44,8 +44,6 @@
     if (next) newDate.setTime(currentDate.getTime() + 24 * 60 * 60 * 1000);
     else newDate.setTime(currentDate.getTime() - 24 * 60 * 60 * 1000);
 
-    console.log(newDate);
-
     if (newDate > new Date()) return;
     currentDate = newDate;
     promise = fetchQuote();
@@ -60,8 +58,7 @@
     {#if quote}
       <section aria-label="image">
         <button on:click={() => handleClick(false)} class="left">{"<"}</button>
-        <button {disabled} on:click={() => handleClick(true)} class="right">{">"}</button>
-
+        <button disabled={isButtonDisabled} on:click={() => handleClick(true)} class="right">{">"}</button>
         <img on:load={() => (isLoading = false)} src={quote.img} alt="beautiful image" />
         {#if !isLoading}
           <section aria-label="text">
